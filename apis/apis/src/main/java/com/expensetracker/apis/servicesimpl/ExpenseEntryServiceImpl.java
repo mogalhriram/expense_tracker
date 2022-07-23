@@ -39,7 +39,7 @@ public class ExpenseEntryServiceImpl implements ExpenseEntryService {
 
     } catch (Exception e) {
       log.error("Error Occurred While adding expense record");
-      throw new ExpenseException("Error Occurred While adding expense record");
+      throw new ExpenseException("Error Occurred While adding expense record: " + e.getMessage());
     }
   }
 

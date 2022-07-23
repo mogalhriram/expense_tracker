@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.expensetracker.apis.CustomException.ExpenseException;
 import com.expensetracker.apis.DTOs.ExpenseEntryRequest;
 import com.expensetracker.apis.services.ExpenseEntryService;
 
@@ -19,12 +20,11 @@ public class ExpenseEntryController {
 
   // TODO later we add user id as path variable /users/{userid}/expenses
   @PostMapping("apis/expenses/")
-  ResponseEntity<String> addExpenseEntry(@RequestBody ExpenseEntryRequest expenseEntryRequest) {
-    try {
-      String response = expenseEntryService.addExpenseEntry(expenseEntryRequest);
-      return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    } catch (Exception e) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-    }
+  ResponseEntity<String> addExpenseEntry(@RequestBody ExpenseEntryRequest expenseEntryRequest)
+      throws ExpenseException {
+
+    String response = expenseEntryService.addExpenseEntry(expenseEntryRequest);
+    return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
   }
 }
