@@ -9,6 +9,10 @@ A full stack web app where user track there expenses and get statement in pdf fo
 - Java
 - Spring Boot
 - MySQL
+- Maven
+- Junit
+- Mockito
+- Swagger
 # Frontend
 - Typescript
 - Angular
