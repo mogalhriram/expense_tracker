@@ -1,8 +1,6 @@
 package com.expensetracker.apis.services;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import org.junit.Ignore;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -34,9 +32,9 @@ class ExpenseEntryServiceTest {
     // passing null expenseEntryRequest
     try {
       expenseEntryService.addExpenseEntry(null);
-      assertTrue(false);
+      Assert.assertTrue(false);
     } catch (Exception e) {
-      assertEquals("addExpenseEntry: expenseEntryRequest passed null", e.getMessage());
+      Assert.assertEquals("addExpenseEntry: expenseEntryRequest passed null", e.getMessage());
     }
   }
 
@@ -46,7 +44,7 @@ class ExpenseEntryServiceTest {
     expenseEntryRequest.setAmount(100d);
     Mockito.when(expenseEntryRepoMock.save(Mockito.any())).thenReturn(null);
     String result = expenseEntryService.addExpenseEntry(expenseEntryRequest);
-    assertEquals("Expense Record Added Succesfully", result);
+    Assert.assertEquals("Expense Record Added Succesfully", result);
   }
 
 
