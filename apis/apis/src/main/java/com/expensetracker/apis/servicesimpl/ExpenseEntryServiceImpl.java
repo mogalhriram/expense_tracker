@@ -2,6 +2,7 @@ package com.expensetracker.apis.servicesimpl;
 
 import java.text.MessageFormat;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.expensetracker.apis.CustomException.ExpenseException;
 import com.expensetracker.apis.DAO.ExpenseEntryRepo;
@@ -19,27 +20,23 @@ public class ExpenseEntryServiceImpl implements ExpenseEntryService {
   private ExpenseEntryRepo expenseEntryRepo;
 
   @Override
-  public String addExpenseEntry(ExpenseEntryRequest expenseEntryRequest) throws ExpenseException {
+  public ExpenseEntry addExpenseEntry(ExpenseEntryRequest expenseEntryRequest)
+      throws ExpenseException {
 
     log.info(
         MessageFormat.format("addExpenseEntry: expenseEntryRequest = {0}", expenseEntryRequest));
-
-    if (expenseEntryRequest == null) {
-      log.error("addExpenseEntry: expenseEntryRequest passed null");
-      throw new ExpenseException("addExpenseEntry: expenseEntryRequest passed null");
-    }
 
     try {
       ExpenseEntry expenseEntry = new ExpenseEntry();
       expenseEntry.setExpenseCause(expenseEntryRequest.getExpenseCause());
       expenseEntry.setDate(expenseEntryRequest.getDate());
       expenseEntry.setAmount(expenseEntryRequest.getAmount());
-      expenseEntryRepo.save(expenseEntry);
-      return "Expense Record Added Succesfully";
+      return expenseEntryRepo.save(expenseEntry);
 
     } catch (Exception e) {
-      log.error("Error Occurred While adding expense record");
-      throw new ExpenseException("Error Occurred While adding expense record: " + e.getMessage());
+      log.error("Error Occurred While adding expense record", e.getMessage(), e);
+      throw new ExpenseException("Error Occurred While adding expense record: ",
+          HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
   }
 

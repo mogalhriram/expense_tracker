@@ -10,6 +10,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import com.expensetracker.apis.CustomException.ExpenseException;
 import com.expensetracker.apis.DAO.ExpenseEntryRepo;
 import com.expensetracker.apis.DTOs.ExpenseEntryRequest;
+import com.expensetracker.apis.models.ExpenseEntry;
 import com.expensetracker.apis.servicesimpl.ExpenseEntryServiceImpl;
 
 class ExpenseEntryServiceTest {
@@ -27,40 +28,32 @@ class ExpenseEntryServiceTest {
     ReflectionTestUtils.setField(expenseEntryService, "expenseEntryRepo", expenseEntryRepoMock);
   }
 
-  @Test
-  void addExpenseEntryTestWithNullRequest() {
-    // passing null expenseEntryRequest
-    try {
-      expenseEntryService.addExpenseEntry(null);
-      Assert.assertTrue(false);
-    } catch (Exception e) {
-      Assert.assertEquals("addExpenseEntry: expenseEntryRequest passed null", e.getMessage());
-    }
-  }
 
   @Test
   void addExpenseEntryTest() throws ExpenseException {
     ExpenseEntryRequest expenseEntryRequest = new ExpenseEntryRequest();
     expenseEntryRequest.setAmount(100d);
-    Mockito.when(expenseEntryRepoMock.save(Mockito.any())).thenReturn(null);
-    String result = expenseEntryService.addExpenseEntry(expenseEntryRequest);
-    Assert.assertEquals("Expense Record Added Succesfully", result);
+    ExpenseEntry expenseEntry = new ExpenseEntry();
+    expenseEntry.setAmount(100d);
+    Mockito.when(expenseEntryRepoMock.save(Mockito.any())).thenReturn(expenseEntry);
+    ExpenseEntry result = expenseEntryService.addExpenseEntry(expenseEntryRequest);
+    Assert.assertEquals(100, result.getAmount(), 0);
   }
 
 
-  // @Test
-  // @Ignore("Test to be fixed")
-  // void addExpenseEntryExceptionTest() {
-  // try {
-  // ExpenseEntryRequest expenseEntryRequest = new ExpenseEntryRequest();
-  // expenseEntryRequest.setAmount(100d);
-  // expenseEntryService.addExpenseEntry(expenseEntryRequest);
-  // Mockito.when(expenseEntryRepoMock.save(Mockito.any())).thenThrow(new RuntimeException());
-  // assertTrue(false);
-  // } catch (Exception e) {
-  // // test passed
-  // assertTrue(true);
-  // }
-  // }
+  @Test
+  void addExpenseEntryExceptionTest() {
+    try {
+      ExpenseEntryRequest expenseEntryRequest = new ExpenseEntryRequest();
+      expenseEntryRequest.setAmount(100d);
+      // we will get Type cast exception here
+      Mockito.when(expenseEntryRepoMock.save(Mockito.any())).thenReturn(expenseEntryRequest);
+      expenseEntryService.addExpenseEntry(expenseEntryRequest);
+      Assert.assertTrue(false);
+    } catch (Exception e) {
+      // test passed
+      Assert.assertTrue(true);
+    }
+  }
 
 }
