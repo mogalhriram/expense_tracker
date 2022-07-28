@@ -2,7 +2,8 @@ package com.expensetracker.apis.services;
 
 import com.expensetracker.apis.CustomException.ExpenseException;
 import com.expensetracker.apis.DTOs.ExpenseEntryRequest;
+import com.expensetracker.apis.models.ExpenseEntry;
 
 public interface ExpenseEntryService {
-  String addExpenseEntry(ExpenseEntryRequest expenseEntryRequest) throws ExpenseException;
+  ExpenseEntry addExpenseEntry(ExpenseEntryRequest expenseEntryRequest) throws ExpenseException;
 }

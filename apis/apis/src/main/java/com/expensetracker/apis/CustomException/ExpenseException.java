@@ -1,9 +1,17 @@
 package com.expensetracker.apis.CustomException;
 
-public class ExpenseException extends Exception {
+import org.springframework.http.HttpStatus;
+import lombok.Data;
 
-  public ExpenseException(String errorMsg) {
+@Data
+public class ExpenseException extends Exception {
+  private HttpStatus status;
+  private Object responseObj;
+
+  public ExpenseException(String errorMsg, HttpStatus status, Object responseObj) {
     super(errorMsg);
+    this.status = status;
+    this.responseObj = responseObj;
   }
 
 }
