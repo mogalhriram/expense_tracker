@@ -50,6 +50,9 @@ public class ExpenseEntryServiceImpl implements ExpenseEntryService {
   @Override
   public ExpenseEntry updateExpenseEntry(Integer expenseEntryId,
       ExpenseEntryRequest expenseEntryRequest) throws ExpenseException {
+    log.info(
+        MessageFormat.format("UpdateExpenseEntry: expenseEntryId = {0}, expenseEntryRequest = {1}",
+            expenseEntryId, expenseEntryRequest));
     Optional<ExpenseEntry> expenseEntryRecord = expenseEntryRepo.findById(expenseEntryId);
     if (!expenseEntryRecord.isPresent() || Objects.isNull(expenseEntryRecord.get())) {
       log.error("Expense Record Not found for expenseEntryId : {}", expenseEntryId);
@@ -59,6 +62,8 @@ public class ExpenseEntryServiceImpl implements ExpenseEntryService {
 
     try {
       ExpenseEntry expenseEntry = expenseEntryRecord.get();
+      log.info(MessageFormat.format("Fetched expense record for {0} id : {1}", expenseEntryId,
+          expenseEntry));
       if (!Objects.isNull(expenseEntryRequest.getExpenseCause()))
         expenseEntry.setExpenseCause(expenseEntryRequest.getExpenseCause());
       if (!Objects.isNull(expenseEntryRequest.getAmount()))
