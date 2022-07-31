@@ -6,4 +6,7 @@ import com.expensetracker.apis.models.ExpenseEntry;
 
 public interface ExpenseEntryService {
   ExpenseEntry addExpenseEntry(ExpenseEntryRequest expenseEntryRequest) throws ExpenseException;
+
+  ExpenseEntry updateExpenseEntry(Integer expenseEntryId, ExpenseEntryRequest expenseEntryRequest)
+      throws ExpenseException;
 }
