@@ -10,13 +10,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
 import com.expensetracker.apis.CustomException.ExpenseException;
-import com.expensetracker.apis.dao.ExpenseEntryRepo;
+import com.expensetracker.apis.DAO.ExpenseEntryRepo;
 import com.expensetracker.apis.dto.ExpenseEntryRequest;
 import com.expensetracker.apis.models.ExpenseEntry;
 import com.expensetracker.apis.servicesimpl.ExpenseEntryServiceImpl;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 class ExpenseEntryServiceTest extends BaseSetup {

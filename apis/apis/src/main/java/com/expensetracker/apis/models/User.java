@@ -1,5 +1,4 @@
 package com.expensetracker.apis.models;
-3
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
