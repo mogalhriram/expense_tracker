@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "expenseCause": "Course Fee",
+    "date": "2022-08-02",
+    "amount": 100
+  },
+  {
+    "id": 2,
+    "expenseCause": "Shopping",
+    "date": "2022-08-02",
+    "amount": 1000
+  }
+]

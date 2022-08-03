@@ -1,8 +1,7 @@
-package com.expensetracker.apis.DTOs;
+package com.expensetracker.apis.dto;
 
 import java.text.MessageFormat;
 import java.time.LocalDate;
-import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
