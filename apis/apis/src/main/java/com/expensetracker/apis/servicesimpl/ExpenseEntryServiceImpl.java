@@ -7,13 +7,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import com.expensetracker.apis.CustomException.ExpenseException;
 import com.expensetracker.apis.DAO.ExpenseEntryRepo;
 import com.expensetracker.apis.dto.ExpenseEntryRequest;
 import com.expensetracker.apis.models.ExpenseEntry;
 import com.expensetracker.apis.services.ExpenseEntryService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.CollectionUtils;
 
 @Service
 @Slf4j
@@ -81,17 +81,19 @@ public class ExpenseEntryServiceImpl implements ExpenseEntryService {
   }
 
   @Override
-  public List<ExpenseEntry> GetAllExpenseEntries() throws ExpenseException {
+  public List<ExpenseEntry> getAllExpenseEntries() throws ExpenseException {
     try {
       List<ExpenseEntry> expenseEntries;
       expenseEntries = expenseEntryRepo.findAll();
-      if(CollectionUtils.isEmpty(expenseEntries)) {
-        log.info("No Expense Entries found...");
+      if (CollectionUtils.isEmpty(expenseEntries)) {
+        log.error("No Expense Entries found...");
         throw new ExpenseException("No records found!", HttpStatus.NOT_FOUND, null);
       }
       return expenseEntries;
     } catch (Exception e) {
-      throw new ExpenseException("Error Occurred While Fetching Expense Record :" + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null);
+      log.error("Error Occurred While Fetching Expense Record : {}", e.getMessage(), e);
+      throw new ExpenseException("Error Occurred While Fetching Expense Record :" + e.getMessage(),
+          HttpStatus.INTERNAL_SERVER_ERROR, null);
     }
   }
 
