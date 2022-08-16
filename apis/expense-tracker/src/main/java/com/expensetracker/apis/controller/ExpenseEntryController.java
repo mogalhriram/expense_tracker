@@ -4,13 +4,13 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
 import com.expensetracker.apis.CustomException.ExpenseException;
 import com.expensetracker.apis.dto.ExpenseEntryRequest;
 import com.expensetracker.apis.services.ExpenseEntryService;
@@ -69,19 +69,20 @@ public class ExpenseEntryController {
   }
 
   @GetMapping("/expenses/")
-  @ApiOperation(value="Fetch all expense details", notes = "Fetch expenses by Id will be updated later")
+  @ApiOperation(value = "Fetch all expense details",
+      notes = "Fetch expenses by Id will be updated later")
   @ApiResponses(value = {@ApiResponse(code = 200, message = "Expense record Fetched Succesfully"),
-          @ApiResponse(code = 400, message = "Bad Request. Response body would contain more details"),
-          @ApiResponse(code = 401, message = "Unauthorized."),
-          @ApiResponse(code = 422,
-                  message = "Unprocessable Entity. Response body would contain more details"),
-          @ApiResponse(code = 500,
-                  message = "Internal Server Error. Response body would contain more details")})
-  public ResponseEntity<Object> getExpenseEntry() throws ExpenseException{
+      @ApiResponse(code = 400, message = "Bad Request. Response body would contain more details"),
+      @ApiResponse(code = 401, message = "Unauthorized."),
+      @ApiResponse(code = 422,
+          message = "Unprocessable Entity. Response body would contain more details"),
+      @ApiResponse(code = 500,
+          message = "Internal Server Error. Response body would contain more details")})
+  public ResponseEntity<Object> getExpenseEntry() throws ExpenseException {
     try {
       return ResponseHandler.generateResponse("Expense Record Fecthed Succesfully!", HttpStatus.OK,
-              expenseEntryService.GetAllExpenseEntries());
-    } catch(ExpenseException e) {
+          expenseEntryService.getAllExpenseEntries());
+    } catch (ExpenseException e) {
       return ResponseHandler.generateResponse(e.getMessage(), e.getStatus(), e.getResponseObj());
     }
   }

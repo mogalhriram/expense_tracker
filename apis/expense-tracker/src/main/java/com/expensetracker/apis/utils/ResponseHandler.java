@@ -1,10 +1,9 @@
 package com.expensetracker.apis.utils;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 public class ResponseHandler {
   public static ResponseEntity<Object> generateResponse(String message, HttpStatus status,

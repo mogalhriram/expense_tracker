@@ -1,7 +1,7 @@
 package com.expensetracker.apis.services;
 
-import com.expensetracker.apis.services.utils.BaseSetup;
-import com.fasterxml.jackson.core.type.TypeReference;
+import java.io.IOException;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,10 +13,9 @@ import com.expensetracker.apis.CustomException.ExpenseException;
 import com.expensetracker.apis.DAO.ExpenseEntryRepo;
 import com.expensetracker.apis.dto.ExpenseEntryRequest;
 import com.expensetracker.apis.models.ExpenseEntry;
+import com.expensetracker.apis.services.utils.BaseSetup;
 import com.expensetracker.apis.servicesimpl.ExpenseEntryServiceImpl;
-
-import java.io.IOException;
-import java.util.List;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 class ExpenseEntryServiceTest extends BaseSetup {
 
@@ -63,15 +62,16 @@ class ExpenseEntryServiceTest extends BaseSetup {
 
   @Test
   void fetchAllExpenseTest() throws IOException, ExpenseException {
-     Mockito.when(expenseEntryRepoMock.findAll()).thenReturn(getAllExpenseEntries());
-     List<ExpenseEntry> expenseEntries = expenseEntryService.GetAllExpenseEntries();
-     Assert.assertNotNull(expenseEntries);
-     Assert.assertEquals(1,expenseEntries.get(0).getId().intValue());
-     Assert.assertEquals(2,expenseEntries.get(1).getId().intValue());
+    Mockito.when(expenseEntryRepoMock.findAll()).thenReturn(getAllExpenseEntries());
+    List<ExpenseEntry> expenseEntries = expenseEntryService.getAllExpenseEntries();
+    Assert.assertNotNull(expenseEntries);
+    Assert.assertEquals(1, expenseEntries.get(0).getId().intValue());
+    Assert.assertEquals(2, expenseEntries.get(1).getId().intValue());
   }
 
   private List<ExpenseEntry> getAllExpenseEntries() throws IOException {
-    return getInstanceFromJson(EXPENSE_ENTRIES_FILE,null ,new TypeReference<List<ExpenseEntry>>(){});
+    return getInstanceFromJson(EXPENSE_ENTRIES_FILE, null,
+        new TypeReference<List<ExpenseEntry>>() {});
   }
 
 }
